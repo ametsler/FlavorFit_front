@@ -1,10 +1,10 @@
-import type {CodegenConfig} from '@graphql-codegen/cli'
+import type { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   overwrite: true,
   ignoreNoDocuments: true,
   schema: 'http://localhost:4200/graphql',
-  documents: 'src/shared/graphql/**/*.graphql',
+  documents: ['src/shared/graphql/**/*.graphql', 'src/features/**/*.graphql'],
   generates: {
     'src/__generated__/output.ts': {
       plugins: [
@@ -12,10 +12,9 @@ const config: CodegenConfig = {
         'typescript-operations',
         'typescript-react-apollo'
       ],
-      config:
-        {
-          enumsAsConst: true
-        }
+      config: {
+        enumsAsConst: true
+      }
     },
     'schema.json': {
       plugins: ['introspection']
