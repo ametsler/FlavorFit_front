@@ -7,6 +7,7 @@ import {
 } from '@/__generated__/graphql'
 import { cn } from '@/shared/utils'
 import { useMutation } from '@apollo/client/react'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
@@ -69,11 +70,11 @@ export function AuthForm({ type }: Props) {
     <div className={'flex h-screen'}>
       <div
         className={
-          'm-auto w-sm bg-linear-to-tr from-[#8062ee] to-[#a088fc] p-5 text-white shadow-lg'
+          'relative m-auto w-sm rounded-lg bg-linear-to-tr from-[#8062ee] to-[#a088fc] p-10 text-white shadow-lg'
         }
       >
         <h1 className={'mb-5 text-center text-4xl font-semibold'}>
-          {isLogin ? 'Авторизация' : 'Регистрация'}
+          {isLogin ? 'Вход' : 'Регистрация'}
         </h1>
 
         <form
@@ -89,14 +90,13 @@ export function AuthForm({ type }: Props) {
               }
             })}
             type="email"
-            placeholder={'Email'}
-            className={cn(
-              'border border-transparent transition-colors',
-              errors.email && 'border-red-500'
-            )}
+            placeholder={'почта'}
+            aria-invalid={!!errors.email}
           />
           {errors.email && (
-            <p className={'text-sm text-red-500'}>{errors.email.message}</p>
+            <p className={'text-destructive -mt-1 block text-xs'}>
+              {errors.email.message}
+            </p>
           )}
 
           <Input
@@ -113,14 +113,13 @@ export function AuthForm({ type }: Props) {
               // }
             })}
             type="password"
-            placeholder={'Пароль'}
-            className={cn(
-              'border border-transparent transition-colors',
-              errors.email && 'border-red-500'
-            )}
+            placeholder={'пароль'}
+            aria-invalid={!!errors.password}
           />
           {errors.password && (
-            <p className={'text-sm text-red-500'}>{errors.password.message}</p>
+            <p className={'text-destructive -mt-1 block text-xs'}>
+              {errors.password.message}
+            </p>
           )}
 
           <div className={'text-center'}>
@@ -134,6 +133,15 @@ export function AuthForm({ type }: Props) {
         </form>
 
         <AuthChangeTypeForm type={type} />
+
+        <Image
+          src={'/images/emotions/salad.png'}
+          alt={'Salad'}
+          width={200}
+          height={200}
+          className={'absolute -bottom-16 -left-16 -rotate-12'}
+          draggable={false}
+        />
       </div>
     </div>
   )

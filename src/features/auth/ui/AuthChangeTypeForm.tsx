@@ -11,23 +11,25 @@ interface Props {
 export function AuthChangeTypeForm({ type }: Props) {
   const isLogin = type === 'login'
   return (
-    <div className={'mt-3 text-center'}>
+    <div className={'mt-4 text-center text-sm'}>
       {isLogin ? (
         <div>
+          Нет аккаунта?{' '}
           <Link
             href={PAGES.REGISTER}
-            className={'underline'}
+            className={'link-simple'}
           >
-            Нет аккаунта? Заполните форму регистрации
+            Регистрация
           </Link>
         </div>
       ) : (
         <div>
+          Есть акканут?{' '}
           <Link
             href={PAGES.LOGIN}
-            className={'underline'}
+            className={'link-simple'}
           >
-            Есть акканут?
+            Войти
           </Link>
         </div>
       )}
