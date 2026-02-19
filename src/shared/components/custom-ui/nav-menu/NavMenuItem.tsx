@@ -12,11 +12,11 @@ export function NavMenuItem({ menuItem, isActive }: Props) {
     <Link
       href={menuItem.href}
       className={cn(
-        'hover:text-primary flex items-center gap-2 rounded-xl px-3 py-2 ' +
-          'text-sm font-medium text-gray-50 transition-colors',
+        'hover:text-primary flex items-center gap-2 rounded-2xl px-4 py-2 ' +
+          'text-sm font-medium transition-colors',
         isActive
           ? 'bg-[#1f2023] text-white hover:text-white'
-          : 'bg-[#e9e9e9] text-[#696969] hover:bg-gray-200'
+          : 'bg-[#e9e9e9] text-gray-500 hover:bg-gray-200'
       )}
     >
       <menuItem.icon className={'size-5'} />
