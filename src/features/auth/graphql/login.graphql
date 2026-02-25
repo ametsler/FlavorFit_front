@@ -3,7 +3,7 @@ mutation Login($data: AuthInput!) {
         user {
             id
             email
+            role
         }
-        accessToken
     }
 }

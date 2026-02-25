@@ -1,0 +1,25 @@
+query Me {
+    me {
+        id
+        email,
+        role,
+        profile {
+            fullName
+            gender
+            age
+            bio
+            contact
+        }
+        bodyMeasurement {
+            height
+            weight
+            chest
+            waist
+            thigh
+            arm
+            goalWeight
+            activityLevel
+            nutritionGoal
+        }
+    }
+}

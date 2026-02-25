@@ -3,10 +3,14 @@
 import {
   AuthInput,
   LoginDocument,
-  RegisterDocument
+  LoginMutation,
+  LoginMutationVariables,
+  MeDocument,
+  RegisterDocument,
+  RegisterMutation,
+  RegisterMutationVariables
 } from '@/__generated__/graphql'
-import { cn } from '@/shared/utils'
-import { useMutation } from '@apollo/client/react'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -23,6 +27,8 @@ interface Props {
 export function AuthForm({ type }: Props) {
   const isLogin = type === 'login'
 
+  const client = useApolloClient()
+
   const {
     register,
     handleSubmit,
@@ -35,28 +41,36 @@ export function AuthForm({ type }: Props) {
     }
   })
 
-  const [auth, { loading }] = useMutation(
-    isLogin ? LoginDocument : RegisterDocument,
-    {
-      onError: error => {
-        toast.error(
-          (isLogin ? 'Ошибка при входе' : 'Ошибка при регистрация') +
-            error.errors[0] && ' ' + error.errors[0].message,
-          {
-            id: 'auth-error'
-          }
-        )
-      },
-      onCompleted: () => {
-        toast.success(
-          isLogin ? 'Выполнен вход' : 'Регистрация прошла успешно',
-          {
-            id: 'auth-success'
-          }
-        )
-      }
+  const [auth, { loading }] = useMutation<
+    LoginMutation | RegisterMutation,
+    LoginMutationVariables | RegisterMutationVariables
+  >(isLogin ? LoginDocument : RegisterDocument, {
+    onError: error => {
+      toast.error(
+        (isLogin ? 'Ошибка при входе' : 'Ошибка при регистрация') +
+          error.errors[0] && ' ' + error.errors[0].message,
+        {
+          id: 'auth-error'
+        }
+      )
+    },
+    onCompleted: data => {
+      const authData = 'login' in data ? data?.login : data?.register
+
+      client.resetStore()
+
+      client.writeQuery({
+        query: MeDocument,
+        data: {
+          me: authData.user
+        }
+      })
+
+      toast.success(isLogin ? 'Выполнен вход' : 'Регистрация прошла успешно', {
+        id: 'auth-success'
+      })
     }
-  )
+  })
 
   const handleAuth = (data: AuthInput) => {
     auth({
