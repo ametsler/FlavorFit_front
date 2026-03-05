@@ -3,6 +3,7 @@ import { Bell, Headset } from 'lucide-react'
 import Link from 'next/link'
 
 import { useAuth } from '@/features/auth/hooks/useAuth'
+import { Logout } from '@/features/auth/ui/Logout'
 import { navMenuItem } from '@/features/layout/header/nav.data'
 
 import { NavMenu } from '@/shared/components/custom-ui/nav-menu/NavMenu'
@@ -39,6 +40,9 @@ export function Header() {
         >
           <Bell className={'size-5'} />
         </Button>
+
+        <Logout />
+
         <UserInfo
           avatarUrl="https://avatars.githubusercontent.com/u/0?v=4"
           name={'Без имени'}

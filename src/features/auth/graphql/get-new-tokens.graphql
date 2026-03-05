@@ -1,0 +1,8 @@
+query GetNewTokens {
+    refreshToken {
+        user {
+            email
+            role
+        }
+    }
+}

@@ -12,6 +12,7 @@ import {
 } from '@/__generated__/graphql'
 import { useApolloClient, useMutation } from '@apollo/client/react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
@@ -19,6 +20,8 @@ import { AuthChangeTypeForm } from '@/features/auth/ui/AuthChangeTypeForm'
 
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
+
+import { PAGES } from '@/shared/config/page.config'
 
 interface Props {
   type: 'login' | 'register'
@@ -28,6 +31,7 @@ export function AuthForm({ type }: Props) {
   const isLogin = type === 'login'
 
   const client = useApolloClient()
+  const router = useRouter()
 
   const {
     register,
@@ -69,6 +73,8 @@ export function AuthForm({ type }: Props) {
       toast.success(isLogin ? 'Выполнен вход' : 'Регистрация прошла успешно', {
         id: 'auth-success'
       })
+
+      router.replace(PAGES.DASHBOARD)
     }
   })
 
