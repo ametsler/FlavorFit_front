@@ -36,7 +36,7 @@ export function Header() {
         </Button>
         <Button
           variant={'soft'}
-          className={'mr-6 rounded-full'}
+          className={'mr-2 rounded-full'}
         >
           <Bell className={'size-5'} />
         </Button>
