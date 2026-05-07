@@ -14,13 +14,23 @@ export function AuthChangeTypeForm({ type }: Props) {
     <div className={'mt-4 text-center text-sm'}>
       {isLogin ? (
         <div>
-          Нет аккаунта?{' '}
-          <Link
-            href={PAGES.REGISTER}
-            className={'link-simple'}
-          >
-            Регистрация
-          </Link>
+          <div>
+            Нет аккаунта?{' '}
+            <Link
+              href={PAGES.REGISTER}
+              className={'link-simple'}
+            >
+              Регистрация
+            </Link>
+          </div>
+          <div className="mt-2">
+            <Link
+              href={PAGES.FORGOT_PASSWORD}
+              className="link-simple"
+            >
+              Забыли пароль?
+            </Link>
+          </div>
         </div>
       ) : (
         <div>

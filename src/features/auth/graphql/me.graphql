@@ -3,12 +3,14 @@ query Me {
         id
         email,
         role,
+        isEmailVerified,
         profile {
             fullName
             gender
             age
             bio
             contact
+            photo
         }
         bodyMeasurement {
             height

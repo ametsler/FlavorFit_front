@@ -44,9 +44,14 @@ export function Header() {
         <Logout />
 
         <UserInfo
-          avatarUrl="https://avatars.githubusercontent.com/u/0?v=4"
+          avatarUrl={
+            user?.profile?.photo ??
+            'https://avatars.githubusercontent.com/u/0?v=4'
+          }
           name={'Без имени'}
-          email={user?.email ?? ''}
+          email={`${!user?.isEmailVerified ? 'Не подтвержден ' : ''}${
+            user?.email ?? ''
+          }`}
         />
       </div>
     </header>

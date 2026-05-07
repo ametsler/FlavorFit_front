@@ -1,8 +1,7 @@
+import { errorLink } from './links/apollo-error.link'
+import { httpLink } from './links/apollo-http.link'
 import { IS_CLIENT } from '@/shared/constants/app.constants'
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client'
-
-import { errorLink } from '@/shared/lib/apollo/links/apollo-error.link'
-import { httpLink } from '@/shared/lib/apollo/links/apollo-http.link'
 
 const clientApolloClient = new ApolloClient({
   link: ApolloLink.from([errorLink, httpLink]),
@@ -20,14 +19,14 @@ export const simpleApolloClient = new ApolloClient({
   }
 })
 
-export const serverApolloClient = new ApolloClient({
+const serverApolloClient = new ApolloClient({
   link: ApolloLink.from([httpLink]),
   cache: new InMemoryCache(),
   devtools: {
     enabled: true
   },
   ssrMode: true,
-  defaultContext: {
+  defaultOptions: {
     query: {
       fetchPolicy: 'no-cache'
     }

@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
         hostname: 'avatars.githubusercontent.com',
         port: '',
         pathname: '/u/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'sun9-64.userapi.com',
+        port: '',
+        pathname: '/**'
       }
     ]
   }
