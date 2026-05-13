@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 
 import ResetPassword from '@/features/auth/ui/ResetPassword'
 
@@ -9,6 +10,14 @@ export const metadata: Metadata = {
   ...NO_INDEX_PAGE
 }
 
-export default function Page() {
-  return <ResetPassword />
+export default function Page({
+  searchParams
+}: {
+  searchParams: Promise<{ token: string }>
+}) {
+  return (
+    <Suspense fallback={<>...</>}>
+      <ResetPassword searchParams={searchParams} />
+    </Suspense>
+  )
 }

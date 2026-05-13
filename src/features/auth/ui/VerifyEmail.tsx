@@ -2,17 +2,20 @@
 
 import { VerifyEmailDocument } from '@/__generated__/graphql'
 import { useMutation } from '@apollo/client/react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { use, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 import { PAGES } from '@/shared/config/page.config'
 
-export function VerifyEmail() {
-  const searchParams = useSearchParams()
+export function VerifyEmail({
+  searchParams
+}: {
+  searchParams: Promise<{ token: string }>
+}) {
   const router = useRouter()
 
-  const token = searchParams.get('token')
+  const params = use(searchParams)
 
   const [verifyEmail] = useMutation(VerifyEmailDocument, {
     onCompleted: () => {
@@ -25,10 +28,10 @@ export function VerifyEmail() {
   })
 
   useEffect(() => {
-    if (token) {
-      verifyEmail({ variables: { token } })
+    if (params.token) {
+      verifyEmail({ variables: { token: params.token } })
     }
-  }, [token, verifyEmail])
+  }, [params.token, verifyEmail])
 
   return (
     <div className="flex h-screen items-center justify-center">

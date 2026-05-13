@@ -3,6 +3,7 @@ import {
   CalendarDays,
   ChartColumn,
   House,
+  Settings,
   Store,
   Users,
   Utensils
@@ -15,37 +16,37 @@ import { PAGES } from '@/shared/config/page.config'
 export const navMenuItem: IMenuItem[] = [
   {
     icon: House,
-    label: 'Home',
+    label: 'Главная',
     href: PAGES.DASHBOARD
   },
   {
     icon: CalendarDays,
-    label: 'MealPlans',
+    label: 'Планы питания',
     href: PAGES.MEAL_PLANS
   },
   {
     icon: Utensils,
-    label: 'Nutrition',
+    label: 'Питание',
     href: PAGES.NUTRITION
   },
   {
     icon: ChartColumn,
-    label: 'Analytics',
+    label: 'Аналитика',
     href: PAGES.ANALYTICS
   },
   {
     icon: Store,
-    label: 'Order Groceries',
+    label: 'Заказать продукты',
     href: PAGES.ORDER_GROCERIES
   },
   {
     icon: BookMarked,
-    label: 'Recipes',
+    label: 'Рецепты',
     href: PAGES.RECIPES
   },
   {
-    icon: Users,
-    label: 'Forum',
-    href: PAGES.FORUM
+    icon: Settings,
+    label: 'Профиль',
+    href: PAGES.PROFILE
   }
 ]

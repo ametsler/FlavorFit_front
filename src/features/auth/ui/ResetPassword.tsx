@@ -3,8 +3,8 @@
 import { ResetPasswordDocument } from '@/__generated__/graphql'
 import { useMutation } from '@apollo/client/react'
 import { Turnstile, TurnstileInstance } from '@marsidev/react-turnstile'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { use, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
@@ -17,11 +17,14 @@ interface FormData {
   password: string
 }
 
-export default function ResetPassword() {
-  const searchParams = useSearchParams()
+export default function ResetPassword({
+  searchParams
+}: {
+  searchParams: Promise<{ token: string }>
+}) {
   const router = useRouter()
 
-  const token = searchParams.get('token')
+  const params = use(searchParams)
 
   const { register, handleSubmit } = useForm<FormData>()
 
@@ -48,12 +51,10 @@ export default function ResetPassword() {
       return
     }
 
-    if (!token) return
-
     resetPassword({
       variables: {
         data: {
-          token,
+          token: params.token,
           newPassword: data.password
         }
       },

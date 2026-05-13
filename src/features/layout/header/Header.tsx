@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { Logout } from '@/features/auth/ui/Logout'
-import { navMenuItem } from '@/features/layout/header/nav.data'
+import { navMenuItem } from '@/features/layout/header/nav-menu.data'
 
 import { NavMenu } from '@/shared/components/custom-ui/nav-menu/NavMenu'
 import { UserInfo } from '@/shared/components/custom-ui/user-info/UserInfo'
@@ -44,14 +44,10 @@ export function Header() {
         <Logout />
 
         <UserInfo
-          avatarUrl={
-            user?.profile?.photo ??
-            'https://avatars.githubusercontent.com/u/0?v=4'
-          }
-          name={'Без имени'}
-          email={`${!user?.isEmailVerified ? 'Не подтвержден ' : ''}${
-            user?.email ?? ''
-          }`}
+          avatarUrl={user?.profile?.photo || undefined}
+          name={user?.profile?.fullName || 'Без имени'}
+          email={user?.email ?? ''}
+          isEmailVerified={user?.isEmailVerified || false}
         />
       </div>
     </header>

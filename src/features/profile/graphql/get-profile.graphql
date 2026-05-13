@@ -1,0 +1,27 @@
+query GetProfile {
+    me {
+        id
+        email,
+        role,
+        isEmailVerified,
+        profile {
+            fullName
+            gender
+            age
+            bio
+            contact
+            photo
+        }
+        bodyMeasurement {
+            height
+            weight
+            chest
+            waist
+            thigh
+            arm
+            goalWeight
+            activityLevel
+            nutritionGoal
+        }
+    }
+}

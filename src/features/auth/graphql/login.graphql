@@ -4,6 +4,7 @@ mutation Login($data: AuthInput!) {
             id
             email
             role
+            isEmailVerified
         }
     }
 }

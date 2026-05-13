@@ -58,7 +58,7 @@ export function AuthForm({ type }: Props) {
     onError: error => {
       toast.error(
         (isLogin ? 'Ошибка при входе' : 'Ошибка при регистрация') +
-          error.errors[0] && ' ' + error.errors[0].message,
+          (error as any).errors[0] && ' ' + (error as any).errors[0].message,
         {
           id: 'auth-error'
         }
