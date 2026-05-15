@@ -1,6 +1,15 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
+  async rewrites() {
+    return [
+      {
+        source: '/uploads/:path*',
+        destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/uploads/:path*`
+      }
+    ]
+  },
   images: {
     remotePatterns: [
       {
@@ -8,12 +17,6 @@ const nextConfig: NextConfig = {
         hostname: 'avatars.githubusercontent.com',
         port: '',
         pathname: '/u/**'
-      },
-      {
-        protocol: 'https',
-        hostname: 'sun9-64.userapi.com',
-        port: '',
-        pathname: '/**'
       }
     ]
   }
