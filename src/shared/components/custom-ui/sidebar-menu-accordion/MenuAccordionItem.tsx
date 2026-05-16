@@ -1,6 +1,7 @@
 import { ISidebarMenuAccordionItem } from './sidebar-menu-accordion.types'
 import { cn } from '@/shared/utils'
-import { ChevronDown, CornerDownRight } from 'lucide-react'
+import { ChevronDown, ChevronUp, CornerDownRight } from 'lucide-react'
+import { useState } from 'react'
 
 import {
   Collapsible,
@@ -19,8 +20,12 @@ export function MenuAccordionItem<K extends string = string>({
   activeValue,
   onValueChange
 }: Props<K>) {
+  const [isOpen, setIsOpen] = useState<boolean>(item.isInitialOpen || false)
   return (
-    <Collapsible defaultOpen={item.isInitialOpen}>
+    <Collapsible
+      defaultOpen={item.isInitialOpen}
+      onOpenChange={setIsOpen}
+    >
       <CollapsibleTrigger
         className={cn(
           'flex w-full items-center justify-between rounded-xl px-2 py-1.5 opacity-80',
@@ -40,7 +45,8 @@ export function MenuAccordionItem<K extends string = string>({
           {item.name}
         </span>
 
-        {item.items.length > 0 && <ChevronDown size={20} />}
+        {item.items.length > 0 &&
+          (isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />)}
       </CollapsibleTrigger>
       {item.items.length > 0 && (
         <CollapsibleContent>
