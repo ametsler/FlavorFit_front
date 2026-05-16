@@ -1,20 +1,22 @@
 'use client'
 
+import { RecipesBanners } from './recipes-banners/RecipesBanners'
 import { RecipeSidebar } from './recipes-sidebar/RecipeSidebar'
 import { MealType } from '@/shared/types'
-import { useState } from 'react'
+import { parseAsStringEnum, useQueryState, useQueryStates } from 'nuqs'
 
-import { TRecipeFilters } from '@/features/recipes/recipes-sidebar/recipe-sidebar-menu.types'
+import { useDebounce } from '@/shared/hooks/useDebounce'
 
 export function RecipesDashboard() {
-  const [searchTerm, setSearchTerm] = useState<string>('')
-  const [filters, setFilters] = useState<TRecipeFilters>({
-    mealType: MealType.Dessert
+  const [searchTerm, setSearchTerm] = useQueryState('q', {
+    defaultValue: ''
   })
 
-  const setNewFilters = (f: Partial<TRecipeFilters>) => {
-    setFilters(f as TRecipeFilters)
-  }
+  const [filters, setFilters] = useQueryStates({
+    mealType: parseAsStringEnum(Object.values(MealType))
+  })
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 400)
 
   return (
     <div className="grid grid-cols-[1fr_minmax(0,5fr)] gap-7">
@@ -22,10 +24,10 @@ export function RecipesDashboard() {
         searchTerm={searchTerm}
         filters={filters}
         setSearchTerm={setSearchTerm}
-        setFilters={setNewFilters}
+        setFilters={setFilters}
       />
       <main>
-        <div>Рецепт</div>
+        <RecipesBanners />
       </main>
     </div>
   )
