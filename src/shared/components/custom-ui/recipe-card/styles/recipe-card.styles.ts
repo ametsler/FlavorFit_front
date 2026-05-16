@@ -1,0 +1,91 @@
+import { cva } from 'class-variance-authority'
+
+export const recipeCardVariants = cva('bg-white rounded-xl', {
+  variants: {
+    size: {
+      default: 'p-4',
+      sm: 'p-3.5'
+    }
+  },
+  defaultVariants: {
+    size: 'default'
+  }
+})
+
+export const recipeCardBadgeVariants = cva(
+  'flex items-center gap-0.5 rounded-md bg-gray-200 font-semibold text-black/70',
+  {
+    variants: {
+      size: {
+        default: 'py-1 px-2 text-[12px]',
+        sm: 'py-1 px-2 text-[12px]'
+      }
+    },
+    defaultVariants: {
+      size: 'default'
+    }
+  }
+)
+
+export const recipeCardTitleVariants = cva(
+  'line-clamp-1 font-semibold tracking-tight text-black',
+  {
+    variants: {
+      size: {
+        default: 'text-lg',
+        sm: 'text-base'
+      }
+    },
+    defaultVariants: {
+      size: 'default'
+    }
+  }
+)
+
+export const recipeCardDescriptionVariants = cva('line-clamp-2 text-black/55', {
+  variants: {
+    size: {
+      default: 'mt-2 text-sm leading-5',
+      sm: 'mt-1.5 text-sm leading-5'
+    }
+  },
+  defaultVariants: {
+    size: 'default'
+  }
+})
+
+export const recipeCardFooterTextVariants = cva(
+  'inline-flex items-center gap-1 font-medium text-black/45',
+  {
+    variants: {
+      size: {
+        sm: 'text-xs',
+        default: 'text-xs',
+        lg: 'text-sm'
+      }
+    },
+    defaultVariants: {
+      size: 'default'
+    }
+  }
+)
+
+export const recipeCardDifficultyBadgeVariants = cva(
+  'flex items-center gap-1.5 rounded-md px-2 py-0.5 font-semibold',
+  {
+    variants: {
+      tone: {
+        EASY: 'bg-emerald-100 text-emerald-600',
+        MEDIUM: 'bg-amber-100 text-amber-600',
+        HARD: 'bg-red-100 text-red-500'
+      },
+      size: {
+        default: 'text-xs',
+        sm: 'text-xs'
+      }
+    },
+    defaultVariants: {
+      size: 'default'
+    }
+  }
+)
