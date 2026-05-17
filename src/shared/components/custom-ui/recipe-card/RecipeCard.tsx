@@ -1,4 +1,5 @@
 import {
+  recipeCardDescriptionVariants,
   recipeCardTitleVariants,
   recipeCardVariants
 } from './styles/recipe-card.styles'
@@ -7,6 +8,8 @@ import { GetRecipesQuery } from '@/__generated__/graphql'
 import { cn } from '@/shared/utils'
 import { EllipsisVertical } from 'lucide-react'
 import Link from 'next/link'
+
+import { RecipeCardMetaBadges } from '@/shared/components/custom-ui/recipe-card/ui/badges/RecipeCardMetaBadges'
 
 import { PAGES } from '@/shared/config/page.config'
 
@@ -40,6 +43,15 @@ export function RecipeCard({ recipe, size }: Props) {
           <EllipsisVertical className={size === 'sm' ? 'size-4' : 'size-5'} />
         </button>
       </div>
+
+      <p className={recipeCardDescriptionVariants({ size })}>
+        {recipe.description}
+      </p>
+
+      <RecipeCardMetaBadges
+        recipe={recipe}
+        size={size}
+      />
     </div>
   )
 }
