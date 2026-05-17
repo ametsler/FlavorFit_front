@@ -4,12 +4,12 @@ import {
   recipeCardVariants
 } from './styles/recipe-card.styles'
 import { TRecipeCardSize } from './types/recipe-card.types'
+import { RecipeCardFooter } from './ui/RecipeCardFooter'
+import { RecipeCardMetaBadges } from './ui/badges/RecipeCardMetaBadges'
 import { GetRecipesQuery } from '@/__generated__/graphql'
 import { cn } from '@/shared/utils'
 import { EllipsisVertical } from 'lucide-react'
 import Link from 'next/link'
-
-import { RecipeCardMetaBadges } from '@/shared/components/custom-ui/recipe-card/ui/badges/RecipeCardMetaBadges'
 
 import { PAGES } from '@/shared/config/page.config'
 
@@ -50,6 +50,13 @@ export function RecipeCard({ recipe, size }: Props) {
 
       <RecipeCardMetaBadges
         recipe={recipe}
+        size={size}
+      />
+
+      <RecipeCardFooter
+        difficultyLevel={recipe.difficulty}
+        likes={recipe.likes?.length}
+        views={recipe.views?.length}
         size={size}
       />
     </div>
