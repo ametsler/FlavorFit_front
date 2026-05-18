@@ -1,0 +1,7 @@
+query GetDishTypes {
+  dishTypes {
+    id
+    order
+    title
+  }
+}

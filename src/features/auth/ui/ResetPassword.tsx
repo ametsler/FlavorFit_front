@@ -70,7 +70,7 @@ export default function ResetPassword({
     <div className="flex h-screen">
       <div className="relative m-auto w-sm rounded-lg bg-linear-to-tr from-[#8062ee] to-[#a088fc] p-10 text-white shadow-lg">
         <h1 className="mb-5 text-center text-[2.3rem] font-bold">
-          Reset Password
+          Сброс пароля
         </h1>
 
         <form
@@ -101,7 +101,7 @@ export default function ResetPassword({
               disabled={loading}
               variant="secondary"
             >
-              Reset password
+              Сбросить
             </Button>
           </div>
         </form>

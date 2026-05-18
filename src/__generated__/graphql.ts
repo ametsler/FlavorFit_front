@@ -108,18 +108,20 @@ export type CreateOrderInput = {
 
 export type CreateRecipeIngredientInput = {
   ingredientId: Scalars['String']['input'];
-  quantity: Scalars['Float']['input'];
+  quantity?: InputMaybe<Scalars['Float']['input']>;
   recipeId?: InputMaybe<Scalars['String']['input']>;
+  unit: Unit;
 };
 
 export type CreateRecipeInput = {
+  authorName?: InputMaybe<Scalars['String']['input']>;
   calories?: InputMaybe<Scalars['Int']['input']>;
   carbohydrates?: InputMaybe<Scalars['Int']['input']>;
   cookTime: Scalars['Int']['input'];
   cuisineType: Scalars['String']['input'];
   description: Scalars['String']['input'];
   difficulty: Difficulty;
-  dishTypeId: Scalars['String']['input'];
+  dishTypeId?: InputMaybe<Scalars['String']['input']>;
   fats?: InputMaybe<Scalars['Int']['input']>;
   fiber?: InputMaybe<Scalars['Int']['input']>;
   prepTime: Scalars['Int']['input'];
@@ -127,9 +129,11 @@ export type CreateRecipeInput = {
   rating?: InputMaybe<Scalars['Float']['input']>;
   recipeIngredients?: InputMaybe<Array<CreateRecipeIngredientInput>>;
   slug: Scalars['String']['input'];
+  sourceUrl: Scalars['String']['input'];
   steps?: InputMaybe<Array<CreateStepInput>>;
   tags?: InputMaybe<Array<Scalars['String']['input']>>;
   title: Scalars['String']['input'];
+  yield?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CreateStepInput = {
@@ -178,7 +182,7 @@ export type DishModel = {
   id: Scalars['ID']['output'];
   order: Scalars['Int']['output'];
   recipes?: Maybe<Array<RecipeModel>>;
-  title: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
 };
 
@@ -189,20 +193,18 @@ export const Gender = {
 
 export type Gender = typeof Gender[keyof typeof Gender];
 export type IngredientCreateInput = {
-  iconUrl?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   price: Scalars['Float']['input'];
-  unit: Unit;
 };
 
 export type IngredientModel = {
   __typename?: 'IngredientModel';
   createdAt: Scalars['DateTime']['output'];
-  iconUrl?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
-  price?: Maybe<Scalars['Float']['output']>;
-  unit: Unit;
+  price: Scalars['Float']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
@@ -559,9 +561,10 @@ export type RecipeIngredientModel = {
   id: Scalars['ID']['output'];
   ingredient: IngredientModel;
   ingredientId: Scalars['String']['output'];
-  quantity: Scalars['Float']['output'];
+  quantity?: Maybe<Scalars['Float']['output']>;
   recipe: RecipeModel;
   recipeId: Scalars['String']['output'];
+  unit: Unit;
   updatedAt: Scalars['DateTime']['output'];
 };
 
@@ -580,30 +583,34 @@ export type RecipeModel = {
   __typename?: 'RecipeModel';
   author: UserModel;
   authorId: Scalars['String']['output'];
+  authorName?: Maybe<Scalars['String']['output']>;
   calories?: Maybe<Scalars['Int']['output']>;
   carbohydrates?: Maybe<Scalars['Int']['output']>;
   comments?: Maybe<Array<CommentModel>>;
   cookTime: Scalars['Int']['output'];
   createdAt: Scalars['DateTime']['output'];
-  cuisineType: Scalars['String']['output'];
+  cuisineType?: Maybe<Scalars['String']['output']>;
   description: Scalars['String']['output'];
   difficulty: Difficulty;
   dishType?: Maybe<DishModel>;
-  dishTypeId: Scalars['String']['output'];
+  dishTypeId?: Maybe<Scalars['String']['output']>;
   fats?: Maybe<Scalars['Int']['output']>;
   fiber?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
+  image?: Maybe<Scalars['String']['output']>;
   ingredients?: Maybe<Array<RecipeIngredientModel>>;
   likes?: Maybe<Array<RecipeLikeModel>>;
-  prepTime: Scalars['Int']['output'];
+  prepTime?: Maybe<Scalars['Int']['output']>;
   protein?: Maybe<Scalars['Int']['output']>;
   rating?: Maybe<Scalars['Float']['output']>;
   slug: Scalars['String']['output'];
+  sourceUrl?: Maybe<Scalars['String']['output']>;
   steps?: Maybe<Array<RecipeStepModel>>;
   tags?: Maybe<Array<RecipeTagModel>>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
   views?: Maybe<Array<RecipeViewModel>>;
+  yield?: Maybe<Scalars['Int']['output']>;
 };
 
 export type RecipeStepModel = {
@@ -617,6 +624,7 @@ export type RecipeStepModel = {
   recipeId: Scalars['String']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 export type RecipeTagModel = {
@@ -655,12 +663,34 @@ export const Role = {
 
 export type Role = typeof Role[keyof typeof Role];
 export const Unit = {
-  Cloves: 'CLOVES',
+  AsNeeded: 'AS_NEEDED',
+  Bar: 'BAR',
+  Bunch: 'BUNCH',
+  ByTaste: 'BY_TASTE',
+  Can: 'CAN',
+  Clove: 'CLOVE',
+  Cube: 'CUBE',
+  Dessertspoon: 'DESSERTSPOON',
+  Drop: 'DROP',
+  Glass: 'GLASS',
   Gram: 'GRAM',
+  Head: 'HEAD',
+  Kilogram: 'KILOGRAM',
+  Leaf: 'LEAF',
+  Liter: 'LITER',
   Milliliter: 'MILLILITER',
+  Optional: 'OPTIONAL',
+  Pack: 'PACK',
   Piece: 'PIECE',
+  Pinch: 'PINCH',
+  Pod: 'POD',
+  Root: 'ROOT',
+  Slice: 'SLICE',
   Tablespoon: 'TABLESPOON',
-  Teaspoon: 'TEASPOON'
+  Teaspoon: 'TEASPOON',
+  ToDesiredConsistency: 'TO_DESIRED_CONSISTENCY',
+  Tuber: 'TUBER',
+  Twig: 'TWIG'
 } as const;
 
 export type Unit = typeof Unit[keyof typeof Unit];
@@ -774,12 +804,17 @@ export type UpdateProfileMutationVariables = Exact<{
 
 export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile: { __typename?: 'UserModel', id: string, email: string, role: Role, isEmailVerified: boolean, profile?: { __typename?: 'ProfileModel', fullName: string, gender?: Gender | null, age?: number | null, bio?: string | null, contact?: string | null, photo?: string | null } | null, bodyMeasurement?: { __typename?: 'BodyMeasurementModel', height?: number | null, weight?: number | null, chest?: number | null, waist?: number | null, thigh?: number | null, arm?: number | null, goalWeight?: number | null, activityLevel?: ActivityLevel | null, nutritionGoal?: NutritionGoal | null } | null } };
 
+export type GetDishTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDishTypesQuery = { __typename?: 'Query', dishTypes: Array<{ __typename?: 'DishModel', id: string, order: number, title?: string | null }> };
+
 export type GetRecipesQueryVariables = Exact<{
   input: RecipeFilterInput;
 }>;
 
 
-export type GetRecipesQuery = { __typename?: 'Query', recipesPageable: Array<{ __typename?: 'RecipeModel', title: string, description: string, slug: string, cuisineType: string, difficulty: Difficulty, prepTime: number, cookTime: number, calories?: number | null, protein?: number | null, fats?: number | null, carbohydrates?: number | null, fiber?: number | null, rating?: number | null, authorId: string, dishTypeId: string, likes?: Array<{ __typename?: 'RecipeLikeModel', userId: string }> | null, views?: Array<{ __typename?: 'RecipeViewModel', userId: string }> | null }> };
+export type GetRecipesQuery = { __typename?: 'Query', recipesPageable: Array<{ __typename?: 'RecipeModel', title: string, description: string, image?: string | null, slug: string, cuisineType?: string | null, difficulty: Difficulty, prepTime?: number | null, cookTime: number, calories?: number | null, protein?: number | null, fats?: number | null, carbohydrates?: number | null, fiber?: number | null, rating?: number | null, authorId: string, dishTypeId?: string | null, yield?: number | null, sourceUrl?: string | null, authorName?: string | null, likes?: Array<{ __typename?: 'RecipeLikeModel', userId: string }> | null, views?: Array<{ __typename?: 'RecipeViewModel', userId: string }> | null }> };
 
 
 export const GetNewTokensDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNewTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshToken"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]}}]} as unknown as DocumentNode<GetNewTokensQuery, GetNewTokensQueryVariables>;
@@ -792,4 +827,5 @@ export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"
 export const VerifyEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"token"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}}]}]}}]} as unknown as DocumentNode<VerifyEmailMutation, VerifyEmailMutationVariables>;
 export const GetProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"isEmailVerified"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"age"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}},{"kind":"Field","name":{"kind":"Name","value":"contact"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}},{"kind":"Field","name":{"kind":"Name","value":"bodyMeasurement"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"chest"}},{"kind":"Field","name":{"kind":"Name","value":"waist"}},{"kind":"Field","name":{"kind":"Name","value":"thigh"}},{"kind":"Field","name":{"kind":"Name","value":"arm"}},{"kind":"Field","name":{"kind":"Name","value":"goalWeight"}},{"kind":"Field","name":{"kind":"Name","value":"activityLevel"}},{"kind":"Field","name":{"kind":"Name","value":"nutritionGoal"}}]}}]}}]}}]} as unknown as DocumentNode<GetProfileQuery, GetProfileQueryVariables>;
 export const UpdateProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"isEmailVerified"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"age"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}},{"kind":"Field","name":{"kind":"Name","value":"contact"}},{"kind":"Field","name":{"kind":"Name","value":"photo"}}]}},{"kind":"Field","name":{"kind":"Name","value":"bodyMeasurement"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"chest"}},{"kind":"Field","name":{"kind":"Name","value":"waist"}},{"kind":"Field","name":{"kind":"Name","value":"thigh"}},{"kind":"Field","name":{"kind":"Name","value":"arm"}},{"kind":"Field","name":{"kind":"Name","value":"goalWeight"}},{"kind":"Field","name":{"kind":"Name","value":"activityLevel"}},{"kind":"Field","name":{"kind":"Name","value":"nutritionGoal"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateProfileMutation, UpdateProfileMutationVariables>;
-export const GetRecipesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRecipes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RecipeFilterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipesPageable"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"cuisineType"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"}},{"kind":"Field","name":{"kind":"Name","value":"prepTime"}},{"kind":"Field","name":{"kind":"Name","value":"cookTime"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"protein"}},{"kind":"Field","name":{"kind":"Name","value":"fats"}},{"kind":"Field","name":{"kind":"Name","value":"carbohydrates"}},{"kind":"Field","name":{"kind":"Name","value":"fiber"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}},{"kind":"Field","name":{"kind":"Name","value":"authorId"}},{"kind":"Field","name":{"kind":"Name","value":"dishTypeId"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"views"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipesQuery, GetRecipesQueryVariables>;
+export const GetDishTypesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDishTypes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dishTypes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<GetDishTypesQuery, GetDishTypesQueryVariables>;
+export const GetRecipesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRecipes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RecipeFilterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipesPageable"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"cuisineType"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"}},{"kind":"Field","name":{"kind":"Name","value":"prepTime"}},{"kind":"Field","name":{"kind":"Name","value":"cookTime"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"protein"}},{"kind":"Field","name":{"kind":"Name","value":"fats"}},{"kind":"Field","name":{"kind":"Name","value":"carbohydrates"}},{"kind":"Field","name":{"kind":"Name","value":"fiber"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}},{"kind":"Field","name":{"kind":"Name","value":"authorId"}},{"kind":"Field","name":{"kind":"Name","value":"dishTypeId"}},{"kind":"Field","name":{"kind":"Name","value":"yield"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"authorName"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"views"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipesQuery, GetRecipesQueryVariables>;

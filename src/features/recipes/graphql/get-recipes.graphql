@@ -2,6 +2,7 @@ query GetRecipes($input: RecipeFilterInput!) {
   recipesPageable(filter: $input) {
     title
     description
+    image
     slug
     cuisineType
     difficulty
@@ -15,6 +16,9 @@ query GetRecipes($input: RecipeFilterInput!) {
     rating
     authorId
     dishTypeId
+    yield
+    sourceUrl
+    authorName
     likes {
       userId
     }

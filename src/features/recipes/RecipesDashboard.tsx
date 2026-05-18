@@ -3,9 +3,8 @@
 import { RecipesBanners } from './recipes-banners/RecipesBanners'
 import { RecipeSidebar } from './recipes-sidebar/RecipeSidebar'
 import { GetRecipesDocument, RecipeFilterInput } from '@/__generated__/graphql'
-import { MealType } from '@/shared/types'
 import { useQuery } from '@apollo/client/react'
-import { parseAsStringEnum, useQueryState, useQueryStates } from 'nuqs'
+import { parseAsString, useQueryState, useQueryStates } from 'nuqs'
 import { useMemo } from 'react'
 
 import { RecipesCatalog } from '@/features/recipes/recipes-catalog/RecipesCatalog'
@@ -19,14 +18,14 @@ export function RecipesDashboard() {
   })
 
   const [filters, setFilters] = useQueryStates({
-    mealType: parseAsStringEnum(Object.values(MealType))
+    category: parseAsString.withDefault('')
   })
 
   const debouncedSearchTerm = useDebounce(searchTerm, 400)
 
   const commonInput: RecipeFilterInput = useMemo(
     () => ({
-      // ...filters,
+      ...filters,
       searchTerm: debouncedSearchTerm
     }),
     [filters, debouncedSearchTerm]

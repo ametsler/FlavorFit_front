@@ -11,6 +11,8 @@ import { cn } from '@/shared/utils'
 import { EllipsisVertical } from 'lucide-react'
 import Link from 'next/link'
 
+import { RecipeCardImage } from '@/shared/components/custom-ui/recipe-card/ui/RecipeCardImage'
+
 import { PAGES } from '@/shared/config/page.config'
 
 interface Props {
@@ -26,6 +28,15 @@ export function RecipeCard({ recipe, size }: Props) {
         'transition-shadow duration-300 group-hover:shadow-[0_3px_14px_rgba(0,0,0,.1)]'
       )}
     >
+      {recipe.image && (
+        <RecipeCardImage
+          image={recipe.image}
+          title={recipe.title}
+          size={size}
+          slug={recipe.slug}
+        />
+      )}
+
       <div className="mt-4 flex items-start justify-between gap-3">
         <Link
           href={PAGES.RECIPE_DETAIL(recipe.slug)}

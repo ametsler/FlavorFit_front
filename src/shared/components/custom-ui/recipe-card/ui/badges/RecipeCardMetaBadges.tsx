@@ -13,19 +13,21 @@ export function RecipeCardMetaBadges({ recipe, size }: Props) {
     <div className="mt-4 flex items-center gap-2">
       <RecipeCardBadge size={size}>{recipe.cuisineType}</RecipeCardBadge>
 
-      <RecipeCardBadge
-        Icon={Flame}
-        size={size}
-      >
-        {recipe.calories}kcal
-      </RecipeCardBadge>
+      {recipe.calories && recipe.calories > 0 && (
+        <RecipeCardBadge
+          Icon={Flame}
+          size={size}
+        >
+          {recipe.calories}ккал
+        </RecipeCardBadge>
+      )}
 
       {size !== 'sm' ? (
         <RecipeCardBadge
           Icon={Clock4}
           size={size}
         >
-          {recipe.cookTime}min
+          {recipe.cookTime}мин
         </RecipeCardBadge>
       ) : (
         <RecipeCardBadge size={size}>+1</RecipeCardBadge>

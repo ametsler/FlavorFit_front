@@ -5,7 +5,6 @@ import {
   House,
   Settings,
   Store,
-  Users,
   Utensils
 } from 'lucide-react'
 

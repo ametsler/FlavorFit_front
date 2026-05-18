@@ -10,13 +10,23 @@ const nextConfig: NextConfig = {
       }
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/dashboard',
+        permanent: true
+      }
+    ]
+  },
   images: {
+    unoptimized: true, //Для старых процессоров, которые не поддерживают инструкции AVX для кэширования изображения
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
-        port: '',
-        pathname: '/u/**'
+        protocol: 'http',
+        hostname: 'backend',
+        port: '4200',
+        pathname: '/uploads/**'
       }
     ]
   }
