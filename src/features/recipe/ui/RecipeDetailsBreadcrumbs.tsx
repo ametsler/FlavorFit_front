@@ -15,7 +15,7 @@ export function RecipeDetailsBreadcrumbs({ title }: Props) {
         className="flex items-center gap-1 text-gray-600 transition-colors hover:text-gray-800"
       >
         <ArrowLeft size={16} />
-        <span className="font-medium">Back</span>
+        <span className="font-medium">Рецепты</span>
       </Link>
 
       <span className="mx-2 text-gray-600">/</span>
