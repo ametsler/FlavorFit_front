@@ -16,7 +16,11 @@ export function RecipeDetailsInformation({ recipe }: Props) {
           {recipe?.title}
         </h1>
 
-        <RecipeDetailsActions recipeIngredients={recipe?.ingredients} />
+        <RecipeDetailsActions
+          recipeIngredients={recipe?.ingredients}
+          recipeId={recipe?.id}
+          hasLike={recipe?.hasLike || false}
+        />
       </div>
 
       <RecipeDetailsMeta recipe={recipe} />

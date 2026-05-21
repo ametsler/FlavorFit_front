@@ -4,7 +4,7 @@ import { GetRecipesQuery } from '@/__generated__/graphql'
 import { Clock4, Flame } from 'lucide-react'
 
 interface Props {
-  recipe: GetRecipesQuery['recipesPageable'][0]
+  recipe: GetRecipesQuery['recipes']['items'][0]
   size: TRecipeCardSize
 }
 

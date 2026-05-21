@@ -32,6 +32,7 @@ export function RecipeDetails() {
             <RecipeDetailsContent recipe={recipe?.recipeBySlug} />
             <RecipeDetailsComments
               comments={recipe?.recipeBySlug?.comments}
+              hasLike={recipe?.recipeBySlug?.hasLike || false}
               likes={recipe?.recipeBySlug?.likes}
               views={recipe?.recipeBySlug?.views}
               recipeId={recipe?.recipeBySlug?.id}

@@ -1,0 +1,3 @@
+mutation ToggleRecipeLike($recipeId: String!) {
+  toggleRecipeLike(recipeId: $recipeId)
+}
