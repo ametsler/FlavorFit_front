@@ -2,11 +2,16 @@
 
 import { RecipesBanners } from './recipes-banners/RecipesBanners'
 import { RecipeSidebar } from './recipes-sidebar/RecipeSidebar'
-import { GetRecipesDocument, RecipeFilterInput } from '@/__generated__/graphql'
+import {
+  GetRecipesDocument,
+  RecipeFilterInput,
+  Sorting
+} from '@/__generated__/graphql'
 import { useQuery } from '@apollo/client/react'
 import { parseAsString, useQueryState, useQueryStates } from 'nuqs'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
+import { useFetchMoreRecipes } from '@/features/recipes/hooks/useFetchMoreRecipes'
 import { RecipesCatalog } from '@/features/recipes/recipes-catalog/RecipesCatalog'
 import { RecipesCatalogLoader } from '@/features/recipes/recipes-catalog/RecipesCatalogLoader'
 
@@ -21,6 +26,9 @@ export function RecipesDashboard() {
     category: parseAsString.withDefault('')
   })
 
+  const [recommendedPage, setRecommendedPage] = useState(1)
+  const [popularPage, setPopularPage] = useState(1)
+
   const debouncedSearchTerm = useDebounce(searchTerm, 400)
 
   const commonInput: RecipeFilterInput = useMemo(
@@ -31,32 +39,61 @@ export function RecipesDashboard() {
     [filters, debouncedSearchTerm]
   )
 
-  const { data: recommendedRecipes, loading } = useQuery(GetRecipesDocument, {
+  const {
+    data: recommendedRecipes,
+    loading,
+    fetchMore: fetchMoreRecommended
+  } = useQuery(GetRecipesDocument, {
     variables: {
       input: {
         ...commonInput,
-        skip: 0,
-        take: 10,
-        sortBy: 'recommended'
+        page: 1,
+        limit: 4,
+        sortBy: Sorting.Recommended
       }
     },
     notifyOnNetworkStatusChange: true
   })
 
-  const { data: popularRecipes, loading: popularLoading } = useQuery(
-    GetRecipesDocument,
-    {
-      variables: {
-        input: {
-          ...commonInput,
-          skip: 0,
-          take: 10,
-          sortBy: 'popularity'
-        }
-      },
-      notifyOnNetworkStatusChange: true
-    }
-  )
+  const {
+    data: popularRecipes,
+    loading: popularLoading,
+    fetchMore: fetchMorePopular
+  } = useQuery(GetRecipesDocument, {
+    variables: {
+      input: {
+        ...commonInput,
+        page: 1,
+        limit: 5,
+        sortBy: Sorting.Popularity
+      }
+    },
+    notifyOnNetworkStatusChange: true
+  })
+
+  const recommendedPagination = useFetchMoreRecipes({
+    fetchMore: fetchMoreRecommended,
+    page: recommendedPage,
+    setPage: setRecommendedPage,
+    input: {
+      ...commonInput,
+      limit: 4
+    },
+    sort: Sorting.Recommended,
+    hasMore: recommendedRecipes?.recipes.hasMore
+  })
+
+  const popularPagination = useFetchMoreRecipes({
+    fetchMore: fetchMorePopular,
+    page: popularPage,
+    setPage: setPopularPage,
+    input: {
+      ...commonInput,
+      limit: 5
+    },
+    sort: Sorting.Popularity,
+    hasMore: popularRecipes?.recipes.hasMore
+  })
 
   const isInitialLoading =
     (loading && !recommendedRecipes) || (popularLoading && !popularRecipes)
@@ -76,8 +113,14 @@ export function RecipesDashboard() {
         ) : (
           <>
             <RecipesCatalog
-              recommended={recommendedRecipes?.recipesPageable || []}
-              popular={popularRecipes?.recipesPageable || []}
+              recommended={recommendedRecipes?.recipes.items || []}
+              popular={popularRecipes?.recipes.items || []}
+              recommendedHasMore={recommendedRecipes?.recipes.hasMore}
+              popularHasMore={popularRecipes?.recipes.hasMore}
+              isRecommendedFetchingMore={recommendedPagination.isFetchingMore}
+              isPopularFetchingMore={popularPagination.isFetchingMore}
+              onLoadMoreRecommended={recommendedPagination.loadMore}
+              onLoadMorePopular={popularPagination.loadMore}
             />
           </>
         )}

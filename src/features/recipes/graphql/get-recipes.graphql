@@ -1,29 +1,21 @@
 query GetRecipes($input: RecipeFilterInput!) {
-  recipesPageable(filter: $input) {
-    title
-    description
-    image
-    slug
-    cuisineType
-    difficulty
-    prepTime
-    cookTime
-    calories
-    protein
-    fats
-    carbohydrates
-    fiber
-    rating
-    authorId
-    dishTypeId
-    yield
-    sourceUrl
-    authorName
-    likes {
-      userId
-    }
-    views {
-      userId
+  recipes(input: $input) {
+    hasMore
+    total
+    items {
+      title
+      description
+      image
+      slug
+      cuisineType
+      difficulty
+      prepTime
+      cookTime
+      calories
+      rating
+      likes
+      views
+      hasLike
     }
   }
 }

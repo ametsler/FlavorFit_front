@@ -38,7 +38,7 @@ export function RecipeSidebar({
     {
       isInitialOpen: true,
       icon: CookingPot,
-      name: 'Национальность',
+      name: 'Виды блюд',
       key: 'category',
       items: Object.values(data?.dishTypes || [])
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))

@@ -16,7 +16,7 @@ import { RecipeCardImage } from '@/shared/components/custom-ui/recipe-card/ui/Re
 import { PAGES } from '@/shared/config/page.config'
 
 interface Props {
-  recipe: GetRecipesQuery['recipesPageable'][0]
+  recipe: GetRecipesQuery['recipes']['items'][0]
   size?: TRecipeCardSize
 }
 
@@ -65,9 +65,10 @@ export function RecipeCard({ recipe, size }: Props) {
       />
 
       <RecipeCardFooter
+        hasLike={recipe.hasLike}
         difficultyLevel={recipe.difficulty}
-        likes={recipe.likes?.length}
-        views={recipe.views?.length}
+        likes={recipe.likes}
+        views={recipe.views}
         size={size}
       />
     </div>

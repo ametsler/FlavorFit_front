@@ -19,7 +19,7 @@ interface Props {
   Icon: LucideIcon
   title: string
   size: TRecipeCardSize
-  recipes: GetRecipesQuery['recipesPageable']
+  recipes: GetRecipesQuery['recipes']['items']
   hasMore?: boolean
   isFetchingMore?: boolean
   onLoadMore?: () => void | Promise<void>

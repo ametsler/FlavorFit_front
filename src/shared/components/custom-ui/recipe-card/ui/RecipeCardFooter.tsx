@@ -1,14 +1,13 @@
+import { recipeCardFooterTextVariants } from '../styles/recipe-card.styles'
+import { TRecipeCardSize } from '../types/recipe-card.types'
+import { RecipeCardDifficultyBadge } from './badges/RecipeCardDifficultyBadge'
+import { Difficulty } from '@/__generated__/graphql'
 import { Eye, Heart } from 'lucide-react'
 
 import { formatCompactNumber } from '@/shared/utils/format-compact-number.util'
 
-import { Difficulty } from '@/__generated__/graphql'
-
-import { recipeCardFooterTextVariants } from '../styles/recipe-card.styles'
-import { TRecipeCardSize } from '../types/recipe-card.types'
-import { RecipeCardDifficultyBadge } from './badges/RecipeCardDifficultyBadge'
-
 interface Props {
+  hasLike: boolean
   views?: number | null
   likes?: number | null
   difficultyLevel?: Difficulty
@@ -16,6 +15,7 @@ interface Props {
 }
 
 export function RecipeCardFooter({
+  hasLike,
   views,
   likes,
   difficultyLevel,
@@ -30,7 +30,10 @@ export function RecipeCardFooter({
 
       <div className="flex items-center gap-4">
         <span className={recipeCardFooterTextVariants({ size })}>
-          <Heart className={size === 'sm' ? 'size-3.5' : 'size-4'} />
+          <Heart
+            className={`${size === 'sm' ? 'size-3.5' : 'size-4'} ${hasLike ? 'text-red-500' : ''}`}
+            fill={hasLike ? 'currentColor' : 'none'}
+          />
           {formatCompactNumber(likes)}
         </span>
 
