@@ -1,5 +1,9 @@
-import { ArrowUp } from 'lucide-react'
+import { AddNewCommentDocument } from '@/__generated__/graphql'
+import { Reference } from '@apollo/client'
+import { useMutation } from '@apollo/client/react'
+import { ArrowUp, Loader2 } from 'lucide-react'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 import { Input } from '@/shared/components/ui/input'
 
@@ -10,8 +14,57 @@ interface Props {
 export function AddNewComment({ recipeId }: Props) {
   const [comment, setComment] = useState('')
 
+  const [mutate, { loading }] = useMutation(AddNewCommentDocument, {
+    onCompleted() {
+      setComment('')
+      toast.success('Комментарий добавлен')
+    },
+    update(cache, { data }) {
+      const newComment = data?.createComment
+
+      if (!newComment || !recipeId) return
+
+      cache.modify({
+        id: cache.identify({
+          __typename: 'RecipeModel',
+          id: recipeId
+        }),
+        fields: {
+          comments(
+            existingComments: ReadonlyArray<Reference> = [],
+            { readField, toReference }
+          ) {
+            const newCommentRef = toReference(newComment)
+
+            if (!newCommentRef) {
+              return existingComments
+            }
+
+            const alreadyExists = existingComments.some(item => {
+              return readField('id', item) === newComment.id
+            })
+
+            if (alreadyExists) {
+              return existingComments
+            }
+
+            return [...existingComments, newCommentRef]
+          }
+        }
+      })
+    }
+  })
+
   return (
-    <form className="focus-within:border-primary/80 border-border mt-4 flex w-full items-center gap-2 rounded-4xl border-2 px-3 py-1 transition-colors">
+    <form
+      className="focus-within:border-primary/80 border-border mt-4 flex w-full items-center gap-2 rounded-4xl border-2 px-3 py-1 transition-colors"
+      onSubmit={e => {
+        e.preventDefault()
+        if (recipeId && comment.trim()) {
+          mutate({ variables: { input: { recipeId, content: comment } } })
+        }
+      }}
+    >
       <Input
         type="text"
         placeholder="Add a new comment..."
@@ -24,7 +77,11 @@ export function AddNewComment({ recipeId }: Props) {
         disabled={!comment.trim()}
         type="submit"
       >
-        <ArrowUp className="size-5" />
+        {loading ? (
+          <Loader2 className="size-5 animate-spin" />
+        ) : (
+          <ArrowUp className="size-5" />
+        )}
       </button>
     </form>
   )

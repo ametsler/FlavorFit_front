@@ -25,7 +25,7 @@ function getUnitLabel(unit?: Unit | null): string {
 export function RecipeDetailsIngredients({ recipeIngredients }: Props) {
   return (
     <div className="mt-5">
-      <div className="mb-2 font-semibold">Ingredients:</div>
+      <div className="mb-2 font-semibold">Ингредиенты:</div>
 
       <ul className="flex flex-wrap items-center gap-2.5">
         {recipeIngredients?.map(recipeIngredient => {

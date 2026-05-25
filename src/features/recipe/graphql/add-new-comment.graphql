@@ -1,0 +1,13 @@
+mutation AddNewComment($input: CreateCommentInput!) {
+  createComment(input: $input) {
+    id
+    content
+    createdAt
+    author {
+      profile {
+        photo
+        fullName
+      }
+    }
+  }
+}

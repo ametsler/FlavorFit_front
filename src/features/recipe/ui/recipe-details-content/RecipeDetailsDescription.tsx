@@ -7,7 +7,7 @@ interface Props {
 export function RecipeDetailsDescription({ recipe }: Props) {
   return (
     <div className="mt-5">
-      <div className="mb-1 font-semibold">Description:</div>
+      <div className="mb-1 font-semibold">Описание:</div>
 
       <div className="mb-1 text-sm opacity-65">{recipe?.description}</div>
 
